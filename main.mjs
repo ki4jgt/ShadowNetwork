@@ -127,19 +127,37 @@ class orderedDict{
 
 class datastore {
     constructor(path){
+        this.path = path
+        if (!this.path.endsWith("/")){
+            this.path += "/"
+        }
+
+        this.read = new orderedDict()
+        this.write = new orderedDict()
+
+        setInterval(this._reader.bind(this), 200)
+        setInterval(this._writer.bind(this), 200)
+    }
+    push(key, value){
 
     }
-    push(){
-
-    }
-    pull(){
+    pull(key){
 
     }
     _writer(){
-
+        while (!this.writing){
+            this.writing = true
+        }
+        this.writing = false
     }
     _reader(){
 
+    }
+}
+
+class blockchain {
+    constructor(){
+        
     }
 }
 
@@ -204,6 +222,8 @@ class Agent{
 // Shares datablocks and manifest file containing all agents server is
 // subscribed to -- including ShadowNet publication server, where upgrades are
 // received (disabled by default).
+//
+// Server should have no concept of agents outside of manifest.
 
 class server{
     constructor(){
@@ -254,6 +274,8 @@ class server{
 // mesh networking. Then to eventually incorporate UDP holepunching allowing
 // peers to connect over the Internet through LAN volunteers with port
 // forwarding.
+//
+// Mesh network name will be project URL to pique interests.
 
 // 05. Express Server (UI)
 
@@ -267,10 +289,3 @@ class server{
 // - P2P telephony, walkie-talkie, messaging, and data exchange
 
 //var s = new server()
-var a = new Agent()
-
-setTimeout(() => {
-    let signed = a.sign("I love you!")
-    console.log(signed)
-    console.log(a.verify(signed))
-}, 5000)
